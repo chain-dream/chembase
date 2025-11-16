@@ -18,6 +18,21 @@ let quillEditProcedure;
 let quillEditResults;
 let quillEditNotes;
 
+// Quill 配置：统一的工具栏（包含上下角标）
+const quillOptions = {
+  theme: "snow",
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline"],
+      [{ script: "sub" }, { script: "super" }], // 下标 / 上标
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link"],
+      ["clean"],
+    ],
+  },
+};
+
 // 当前正在编辑的实验
 let currentEditingId = null;
 let currentEditingExperiment = null;
@@ -582,18 +597,18 @@ async function handleUpdateExperiment(e) {
 
 function init() {
   // 初始化 Quill（新建）
-  quillObjective = new Quill("#objective-editor", { theme: "snow" });
-  quillMaterials = new Quill("#materials-editor", { theme: "snow" });
-  quillProcedure = new Quill("#procedure-editor", { theme: "snow" });
-  quillResults = new Quill("#results-editor", { theme: "snow" });
-  quillNotes = new Quill("#notes-editor", { theme: "snow" });
+  quillObjective = new Quill("#objective-editor", quillOptions);
+  quillMaterials = new Quill("#materials-editor", quillOptions);
+  quillProcedure = new Quill("#procedure-editor", quillOptions);
+  quillResults = new Quill("#results-editor", quillOptions);
+  quillNotes = new Quill("#notes-editor", quillOptions);
 
   // 初始化 Quill（编辑弹窗）
-  quillEditObjective = new Quill("#edit-objective-editor", { theme: "snow" });
-  quillEditMaterials = new Quill("#edit-materials-editor", { theme: "snow" });
-  quillEditProcedure = new Quill("#edit-procedure-editor", { theme: "snow" });
-  quillEditResults = new Quill("#edit-results-editor", { theme: "snow" });
-  quillEditNotes = new Quill("#edit-notes-editor", { theme: "snow" });
+  quillEditObjective = new Quill("#edit-objective-editor", quillOptions);
+  quillEditMaterials = new Quill("#edit-materials-editor", quillOptions);
+  quillEditProcedure = new Quill("#edit-procedure-editor", quillOptions);
+  quillEditResults = new Quill("#edit-results-editor", quillOptions);
+  quillEditNotes = new Quill("#edit-notes-editor", quillOptions);
 
   const notebookForm = document.getElementById("notebook-form");
   if (notebookForm) {
