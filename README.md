@@ -167,11 +167,3 @@ http://127.0.0.1:8001
 	•	REST API for lab instruments
 	•	Integration with LIMS-like systems
 
-
-
-
-If you’d like:
-✅ I can also prepare a beautiful GitHub README header banner
-✅ Add an English + Chinese dual-language README
-✅ Create issue templates / CONTRIBUTING.md
-Just tell me!
