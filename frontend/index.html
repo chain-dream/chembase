@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>实验记录管理系统（Signals Lite）</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Quill 样式 -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="layout">
+    <!-- 左侧课题栏 -->
+    <aside class="sidebar">
+      <h2>课题</h2>
+      <form id="notebook-form">
+        <input
+          type="text"
+          id="notebook-name"
+          placeholder="新建课题名称"
+          required
+        />
+        <button type="submit">添加</button>
+      </form>
+      <ul id="notebook-list"></ul>
+    </aside>
+
+    <!-- 右侧主区域 -->
+    <main class="main">
+      <h1>实验记录管理系统（Signals Lite）</h1>
+
+      <!-- 新建实验 -->
+      <section class="create-section">
+        <h2>新建实验记录</h2>
+        <p id="current-notebook-label">
+          当前课题：<span id="current-notebook-name">（尚未选择）</span>
+        </p>
+
+        <form id="create-form">
+          <div class="form-row">
+            <label for="title">实验编号：</label>
+            <input type="text" id="title" required />
+          </div>
+
+          <div class="form-row">
+            <label for="date">日期：</label>
+            <input type="date" id="date" required />
+          </div>
+
+          <div class="form-row">
+            <label>实验人：</label>
+            <div id="objective-editor" class="rich-editor"></div>
+          </div>
+
+          <div class="form-row">
+            <label>实验时间：</label>
+            <div id="materials-editor" class="rich-editor"></div>
+          </div>
+
+          <div class="form-row">
+            <label>反应式：</label>
+            <input type="file" id="reaction-file" accept="image/*" />
+            <div style="margin-top: 6px;">
+              <img
+                id="reaction-preview"
+                class="reaction-img"
+                style="display: none;"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>步骤：</label>
+            <div id="procedure-editor" class="rich-editor"></div>
+          </div>
+
+          <div class="form-row">
+            <label>产物：</label>
+            <div id="results-editor" class="rich-editor"></div>
+          </div>
+
+          <div class="form-row">
+            <label>备注：</label>
+            <div id="notes-editor" class="rich-editor"></div>
+          </div>
+
+          <button type="submit">保存实验</button>
+          <span id="msg"></span>
+        </form>
+      </section>
+
+      <!-- 实验列表 + 筛选 -->
+      <section class="list-section">
+        <h2>实验列表</h2>
+
+        <div class="filter-row">
+          <label>日期：</label>
+          <input type="date" id="filter-date" />
+          <span class="filter-hint">（单日） 或</span>
+          <span>从</span>
+          <input type="date" id="filter-start" />
+          <span>到</span>
+          <input type="date" id="filter-end" />
+        </div>
+
+        <div class="filter-row">
+          <label>实验编号：</label>
+          <input
+            type="text"
+            id="filter-title"
+            placeholder="实验编号关键字"
+          />
+          <button id="filter-apply">搜索</button>
+          <button id="filter-reset">清空</button>
+        </div>
+
+        <div id="experiment-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 实验详情 / 编辑弹窗 -->
+  <div id="experiment-modal" class="modal hidden">
+    <!-- 灰色背景：点击就直接加 hidden -->
+    <div
+      class="modal-overlay"
+      onclick="document.getElementById('experiment-modal').classList.add('hidden')"
+    ></div>
+
+    <!-- 弹窗内容区域 -->
+    <div class="modal-content">
+      <h2>实验详情 / 编辑</h2>
+
+      <form id="edit-form">
+        <input type="hidden" id="edit-id" />
+
+        <div class="form-row">
+          <label for="edit-title">实验编号：</label>
+          <input type="text" id="edit-title" required />
+        </div>
+
+        <div class="form-row">
+          <label for="edit-date">日期：</label>
+          <input type="date" id="edit-date" required />
+        </div>
+
+        <div class="form-row">
+          <label>实验人：</label>
+          <div id="edit-objective-editor" class="rich-editor"></div>
+        </div>
+
+        <div class="form-row">
+          <label>实验时间：</label>
+          <div id="edit-materials-editor" class="rich-editor"></div>
+        </div>
+
+        <div class="form-row">
+          <label>反应式：</label>
+          <input type="file" id="edit-reaction-file" accept="image/*" />
+          <div style="margin-top: 6px;">
+            <img
+              id="edit-reaction-preview"
+              class="reaction-img"
+              style="display: none;"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>步骤：</label>
+          <div id="edit-procedure-editor" class="rich-editor"></div>
+        </div>
+
+        <div class="form-row">
+          <label>产物：</label>
+          <div id="edit-results-editor" class="rich-editor"></div>
+        </div>
+
+        <div class="form-row">
+          <label>备注：</label>
+          <div id="edit-notes-editor" class="rich-editor"></div>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <button type="submit">保存修改</button>
+          <!-- 直接在 HTML 里关闭弹窗 -->
+          <button
+            type="button"
+            id="edit-cancel"
+            onclick="document.getElementById('experiment-modal').classList.add('hidden')"
+          >
+            关闭
+          </button>
+          <span id="edit-msg" style="margin-left: 10px; font-size: 12px;"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Quill 脚本 -->
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <!-- 你的前端逻辑 -->
+  <script src="script.js"></script>
+</body>
+</html>

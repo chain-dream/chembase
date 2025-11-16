@@ -1,0 +1,228 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* 左侧课题栏 */
+.sidebar {
+  width: 260px;
+  border-right: 1px solid #ddd;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+}
+
+#notebook-form {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+#notebook-form input {
+  flex: 1;
+  padding: 4px 6px;
+}
+
+#notebook-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+#notebook-list li {
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#notebook-list li.active {
+  background-color: #1976d2;
+  color: white;
+}
+
+.nb-name {
+  flex: 1;
+}
+
+.nb-delete {
+  border: none;
+  background: transparent;
+  color: #999;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 4px;
+}
+
+.nb-delete:hover {
+  color: #e53935;
+  font-weight: bold;
+}
+
+/* 右侧主区域 */
+.main {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.create-section {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.form-row label {
+  width: 80px;
+}
+
+.form-row input,
+.form-row textarea {
+  flex: 1;
+  padding: 4px 6px;
+}
+
+.rich-editor {
+  flex: 1;
+}
+
+/* Quill 默认高度 */
+.rich-editor .ql-editor {
+  min-height: 60px;
+}
+
+button {
+  padding: 6px 12px;
+  margin-top: 4px;
+}
+
+#msg {
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+#experiment-list {
+  margin-top: 10px;
+}
+
+.experiment-card {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 12px;
+}
+
+.experiment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-btn {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
+}
+
+.edit-btn {
+  margin-right: 6px;
+}
+
+/* 筛选区 */
+.filter-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.filter-row label {
+  width: 80px;
+}
+
+.filter-row input[type="date"],
+.filter-row input[type="text"] {
+  padding: 4px 6px;
+}
+
+.filter-hint {
+  color: #777;
+  font-size: 12px;
+}
+
+/* 反应式图片显示 */
+.reaction-img {
+  max-width: 100%;
+  max-height: 200px;
+  margin-top: 4px;
+  border: 1px solid #ddd;
+}
+
+/* ----------- 弹窗 Modal 样式 ----------- */
+.hidden {
+  display: none !important;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.modal-content {
+  position: relative;
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1001;
+}
+
+.reaction-img {
+  max-width: 400px;
+  max-height: 200px;
+  border: 1px solid #ddd;
+  background: #fff;
+  object-fit: contain;
+}
+
+.reaction-display {
+  margin-top: 4px;
+}
